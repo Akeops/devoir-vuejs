@@ -16,11 +16,27 @@ export const useNotesStore = defineStore('notes', {
 
       // ici on fait une requête GET pour récupérer toutes les notes de l'utilisateur
     },
-    createNote(note) {
-      const store = useCurrentUserStore()
-      const { token, user } = storeToRefs(store)
+    async createNote(title, content) {
+      const currentUserStore = useCurrentUserStore()
+      const response = await fetch('http://localhost:3000/users/notes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${currentUserStore.token}`
+        },
+        body: JSON.stringify({
+          userId: currentUserStore.user.id,
+          title: title,
+          content: content
+        })
+      })
 
-      // ici on fait une requête POST pour créer une nouvelle note
+      if (!response.ok) {
+        throw new Error('Failed to create note')
+      }
+
+      const data = await response.json()
+      this.notes.push(data) // Assuming the API returns the created note
     },
     updateNote(note) {
       const store = useCurrentUserStore()

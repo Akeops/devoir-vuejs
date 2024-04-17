@@ -1,17 +1,28 @@
 <script setup>
-// récupérer le store des notes
+import { ref } from 'vue'
 
-// declarer les variables title et content
+const emits = defineEmits(['submitNote'])
 
-// fonction pour ajouter une note
+const title = ref('')
+const content = ref('')
 
-  // dans la fonction appeler la fonction createNote du store
+function emitEvent() {
+  emits('ajouter-note', newNote.value)
+  newNote.value = {
+    titre: '',
+    isActivated: false
+  }
+}
 
+const newNote = ref({
+  titre: '',
+  isActivated: false
+})
 </script>
 
 <template>
   <div class="max-w-lg mx-auto my-10 p-6 bg-white rounded-lg shadow-md">
-    <form @submit.prevent="addNote" id="addNoteForm" class="space-y-6">
+    <form @submit.prevent="emitEvent" id="addNoteForm" class="space-y-6">
       <h2 class="text-lg font-semibold text-gray-900">Ajouter une nouvelle note</h2>
       <div>
         <label for="title" class="block text-sm font-medium text-gray-700">Titre</label>

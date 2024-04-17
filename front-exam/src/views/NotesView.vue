@@ -2,10 +2,30 @@
 // récupérer le store des notes
 
 // recuperer les notes
+
+import NoteForm from '@/components/NoteForm.vue'
+import { ref } from 'vue'
+import { useNotesStore } from '@/stores/notes.js'
+
+const title = ref('')
+const content = ref('')
+const notesStore = useNotesStore()
+
+const addNote = async () => {
+  try {
+    await notesStore.createNote(title.value, content.value)
+    title.value = ''
+    content.value = ''
+    alert('Note ajoutée avec succès!')
+  } catch (error) {
+    alert("Erreur lors de l'ajout de la note: " + error.message)
+  }
+}
 </script>
 
 <template>
-  <NoteForm />
+  <h1>Ajouter une Nouvelle Note</h1>
+  <NoteForm @submit="addNote" />
 
   <div class="container mx-auto mt-8">
     <div class="flex flex-col">
@@ -44,8 +64,8 @@
                     <div class="text-sm text-gray-900"></div>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button  class="text-indigo-600 hover:text-indigo-900">Edit</button>
-                    <button  class="text-red-600 hover:text-red-900 ml-4">Delete</button>
+                    <button class="text-indigo-600 hover:text-indigo-900">Edit</button>
+                    <button class="text-red-600 hover:text-red-900 ml-4">Delete</button>
                   </td>
                 </tr>
               </tbody>

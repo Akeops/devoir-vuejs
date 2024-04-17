@@ -1,3 +1,4 @@
+<!--NE PAS TOUCHER-->
 <script setup>
 import { RouterView } from 'vue-router'
 import NavBarComponent from '@/components/NavBarComponent.vue'
@@ -6,7 +7,7 @@ import NavBarComponent from '@/components/NavBarComponent.vue'
 <template>
   <header>
     <div class="wrapper">
-      <NavBarComponent/>
+      <NavBarComponent />
     </div>
   </header>
 
